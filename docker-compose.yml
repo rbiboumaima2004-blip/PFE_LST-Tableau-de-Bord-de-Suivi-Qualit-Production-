@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ocp_user
+      POSTGRES_PASSWORD: ocp_password
+      POSTGRES_DB: ocp_dashboard
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend-pfe
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend-pfe/.env
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend-pfe:/app
+
+  frontend:
+    build: ./dashboard-pfe
+    ports:
+      - "3000:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
