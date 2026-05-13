@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
   postgres:
     image: postgres:15-alpine
@@ -11,6 +10,12 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ocp_user -d ocp_dashboard"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   backend:
     build: ./backend-pfe
@@ -19,9 +24,11 @@ services:
     env_file:
       - ./backend-pfe/.env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     volumes:
       - ./backend-pfe:/app
+    restart: on-failure
 
   frontend:
     build: ./dashboard-pfe
