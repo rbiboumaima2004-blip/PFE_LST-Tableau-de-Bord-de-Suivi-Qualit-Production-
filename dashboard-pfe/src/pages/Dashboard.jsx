@@ -36,7 +36,7 @@ export default function Dashboard() {
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:32, paddingBottom:20, borderBottom:'1px solid rgba(30,58,95,0.6)' }}>
         <div>
           <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:6 }}>
-            <div style={{ width:36, height:36, borderRadius:10, background:'linear-gradient(135deg,#006DB7,#00A651)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, fontWeight:900, color:'#fff' }}>O</div>
+            <img src="/logo-ocp.jpeg" alt="OCP" style={{ width:42, height:42, borderRadius:10, objectFit:'contain', background:'#fff', padding:3, flexShrink:0 }} />
             <div>
               <h1 style={{ margin:0, fontSize:22, fontWeight:700, color:'#e2eaf4', lineHeight:1 }}>Tableau de Bord</h1>
               <div style={{ fontSize:11, color:'#4d9fff', marginTop:3 }}>OCP Group · Jorf Lasfar · Production NPK</div>

@@ -2,6 +2,7 @@ version: "3.9"
 services:
   postgres:
     image: postgres:15-alpine
+    container_name: ocp-postgres
     environment:
       POSTGRES_USER: ocp_user
       POSTGRES_PASSWORD: ocp_password
@@ -19,6 +20,7 @@ services:
 
   backend:
     build: ./backend-pfe
+    container_name: ocp-backend
     ports:
       - "8000:8000"
     env_file:
@@ -26,12 +28,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./backend-pfe:/app
+    # Suppression du volume temporairement pour forcer Docker à utiliser les fichiers du Build
     restart: on-failure
 
   frontend:
     build: ./dashboard-pfe
+    container_name: ocp-frontend
     ports:
       - "3000:5173"
     depends_on:
